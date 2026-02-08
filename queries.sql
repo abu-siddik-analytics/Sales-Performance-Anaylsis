@@ -1,19 +1,39 @@
--- Total sales by product
-SELECT p.product_name, SUM(s.quantity * p.price) AS total_sales
-FROM sales s
-JOIN products p ON s.product_id = p.product_id
-GROUP BY p.product_name;
+-- Total Sales & profit
 
--- Monthly sales trend
-SELECT DATE_FORMAT(sale_date, '%Y-%m') AS month,
-       SUM(quantity) AS total_quantity
-FROM sales
-GROUP BY month;
+SELECT Sum(quantity) as Total_sales , 
+         Sum(quantity*(Selling_price-cost_price))as Profit FROM sales as s
+		 JOIN products as p ON s.product_id=p.product_id;
 
--- Top 5 products
-SELECT p.product_name, SUM(s.quantity) AS qty
-FROM sales s
-JOIN products p ON s.product_id = p.product_id
-GROUP BY p.product_name
-ORDER BY qty DESC
-LIMIT 5;
+
+---Category- wise Sales
+ 
+ SELECT category,Sum(selling_price*quantity)as Total_Sales FROM sales as s
+ JOIN products as p ON s.product_id=p.product_id
+ GROUP BY category;
+
+
+--- Top 5 Products
+
+SELECT product_name,Sum(selling_price*quantity)as top_5_products FROM sales as s
+JOIN products as p ON s.product_id=p.product_id
+GROUP BY product_name  ORDER BY top_5_products Desc LIMIT 5;
+
+
+---Region-wise Performance
+
+SELECT region , Sum(Selling_price*quantity)as Total_sales FROM sales as s
+JOIN products as p ON s.product_id=p.product_id
+JOIN customers as c ON s.customer_id=c.customer_id
+GROUP BY region ;
+
+
+--Monthly Sales Trend
+
+SELECT To_char(sale_date,'month')as month , SUM(selling_price*quantity)as Revenue FROM sales as s
+JOIN products as p ON s.product_id=p.product_id
+JOIN customers as c ON s.customer_id=c.customer_id
+GROUP BY month
+ORDER BY month;
+
+
+
