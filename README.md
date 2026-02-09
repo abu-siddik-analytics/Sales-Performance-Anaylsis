@@ -70,4 +70,8 @@ Dashboard file: `Sales Performance Dashboard.pbix`
 - Data visualization  
 - Business insight generation  
 - Dashboard creation
+## 📊 Dashboard Preview
+
+![Dashboard](dashboard.png)
+
 
